@@ -1,8 +1,11 @@
+import Header from "@/components/Header"
+// import prisma from "../../db"
 
 export default function Home() {
   return (
-    <main>
-      <h1> audiophile </h1>
-    </main>
+    <div className="h-screen bg-black">
+      <Header />
+      <main></main>
+    </div>
   )
 }
