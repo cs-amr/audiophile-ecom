@@ -31,15 +31,15 @@ model Product {
   categoryId      String?
   image           ProductImage   @relation(fields: [imageId], references: [id])
   imageId         String
-  cartImage       String
+  cartImage       String?
   categoryImage   CategoryImage  @relation(fields: [categoryImageId], references: [id])
   categoryImageId String
   isNew           Boolean
   price           Float
   description     String
   features        String
-  includedItems   Item[]
-  galleryImages   GalleryImage[]
+  // includedItems   Item[]
+  // galleryImages   GalleryImage[]!
   createdAt       DateTime       @updatedAt
 }
 
@@ -65,7 +65,7 @@ model Item {
   id        String   @id @default(cuid()) @map("_id")
   item      String
   quantity  Int
-  Product   Product? @relation(fields: [productId], references: [id])
+  // Product   Product? @relation(fields: [productId], references: [id])
   productId String?
 }
 
@@ -75,6 +75,6 @@ model GalleryImage {
   mobile    String
   tablet    String
   desktop   String
-  Product   Product? @relation(fields: [productId], references: [id])
+  // Product   Product? @relation(fields: [productId], references: [id])
   productId String?
 }

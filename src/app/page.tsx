@@ -1,4 +1,4 @@
-import Header from "@/components/Header"
+import Header from "@/components/Header";
 // import prisma from "../../db"
 
 export default function Home() {
@@ -7,5 +7,5 @@ export default function Home() {
       <Header />
       <main></main>
     </div>
-  )
+  );
 }
