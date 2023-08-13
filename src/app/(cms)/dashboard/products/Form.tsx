@@ -1,9 +1,7 @@
-import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addNewProduct } from "@/lib/addNewProduct";
-import prisma from "../../../../../db";
-import { Dispatch, FormEvent } from "react";
+import { useLayoutEffect, useState } from "react";
 type FormProps = {
   ProductImage: {
     desktop: string;
@@ -11,11 +9,32 @@ type FormProps = {
     mobile: string;
   };
   setProductImage: React.Dispatch<React.SetStateAction<any>>;
+  GalleryImages: {
+    img1: string;
+    img2: string;
+    img3: string;
+  };
+  setGalleryImages: React.Dispatch<React.SetStateAction<any>>;
+  CartImg: string;
+  setCartImg: React.Dispatch<React.SetStateAction<any>>;
 };
-export default function Form({ ProductImage, setProductImage }: FormProps) {
+export default function Form({
+  ProductImage,
+  setProductImage,
+  GalleryImages,
+  setGalleryImages,
+  CartImg,
+  setCartImg,
+}: FormProps) {
+  const [Categories, setCategories] = useState(null);
+  useLayoutEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data.categories));
+  }, []);
   return (
-    <form onSubmit={addNewProduct}>
-      <div className="mt-8 flex gap-10">
+    <form onSubmit={addNewProduct} className="max-w-full ">
+      <div className="mt-8 flex flex-wrap gap-10">
         <Label htmlFor="name">
           Name
           <Input
@@ -24,7 +43,7 @@ export default function Form({ ProductImage, setProductImage }: FormProps) {
             id="name"
             required
             placeholder="YX1 Wireless Earphones"
-            className="my-2"
+            className="my-2 w-[144px]"
           />
         </Label>
 
@@ -36,19 +55,19 @@ export default function Form({ ProductImage, setProductImage }: FormProps) {
             id="shortname"
             required
             placeholder="YX1"
-            className="my-2"
+            className="my-2 w-[144px]"
           />
         </Label>
 
         <Label htmlFor="price">
           Price
           <Input
-            type="text"
+            type="number"
             name="price"
             id="price"
             required
             placeholder="100"
-            className="my-2"
+            className="my-2 w-[144px]"
           />
         </Label>
       </div>
@@ -62,7 +81,7 @@ export default function Form({ ProductImage, setProductImage }: FormProps) {
             className=" my-1 border p-1 focus:border focus:outline-none"
           >
             <option value="yes">Yes</option>
-            <option value="No">no</option>
+            <option value="no">no</option>
           </select>
         </Label>
         <Label htmlFor="category">
@@ -73,9 +92,18 @@ export default function Form({ ProductImage, setProductImage }: FormProps) {
             id="category"
             className=" my-1 border p-1 focus:border focus:outline-none"
           >
-            <option value="headphones">headphones</option>
-            <option value="speakers">speakers</option>
-            <option value="earphones">headphones</option>
+            {Categories &&
+              Categories?.map((category: { id: string; name: string }) => {
+                return (
+                  <option
+                    value={category.name}
+                    id={category.id}
+                    key={category.id}
+                  >
+                    {category?.name}
+                  </option>
+                );
+              })}
           </select>
         </Label>
       </div>
@@ -87,10 +115,9 @@ export default function Form({ ProductImage, setProductImage }: FormProps) {
             name="description"
             id="description"
             rows={4}
-            cols={60}
             required
             placeholder="write your description "
-            className="my-2 border border-slate-400 p-2 focus:outline-none "
+            className="my-2 min-w-full max-w-full border border-slate-400 p-2 focus:outline-none "
           />
         </Label>
 
@@ -100,14 +127,81 @@ export default function Form({ ProductImage, setProductImage }: FormProps) {
             name="features"
             id="features"
             rows={4}
-            cols={60}
             required
             placeholder="write your product features"
-            className="my-2 border border-slate-400 p-2 focus:outline-none "
+            className="my-2 min-w-full max-w-full border border-slate-400 p-2 focus:outline-none "
           />
         </Label>
       </div>
-      <input type="text" name="image" hidden value={ProductImage} />
+      <input
+        type="text"
+        name="productImage"
+        hidden
+        readOnly
+        value={JSON.stringify(ProductImage)}
+      />
+      <input
+        type="text"
+        name="galleryImages"
+        hidden
+        readOnly
+        value={JSON.stringify(GalleryImages)}
+      />
+      <input type="text" name="cartImage" hidden value={CartImg} />
+      <Label htmlFor="inthebox">
+        In the box
+        <div className="flex items-center gap-4">
+          <Input
+            type="text"
+            name="item1"
+            id="item1"
+            required
+            placeholder="charger"
+            className="my-2 w-[144px] flex-[3]"
+          />
+          <Input
+            type="number"
+            name="quantity1"
+            id=""
+            className="flex-[2]"
+            placeholder="1"
+          />
+        </div>
+        <div className="flex items-center gap-4">
+          <Input
+            type="text"
+            name="item2"
+            id="item2"
+            required
+            placeholder="charger"
+            className="my-2 w-[144px] flex-[3]"
+          />
+          <Input
+            type="number"
+            name="quantity2"
+            id=""
+            className="flex-[2]"
+            placeholder="1"
+          />
+        </div>
+        <div className="flex items-center gap-4">
+          <Input
+            type="text"
+            name="item3"
+            id="item3"
+            required
+            placeholder="charger"
+            className="my-2 w-[144px] flex-[3]"
+          />
+          <Input
+            type="number"
+            name="quantity3"
+            id=""
+            className="flex-[2]"
+            placeholder="1"
+          />
+        </div>
+      </Label>
       <button
         type="submit"
         className="rounded-sm  bg-black p-1 px-3 text-white"

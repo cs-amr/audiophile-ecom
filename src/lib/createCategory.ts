@@ -1,4 +1,3 @@
-import path from "path";
 import prisma from "../../db";
 import { revalidatePath } from "next/cache";
 export async function createCategory(data: FormData) {

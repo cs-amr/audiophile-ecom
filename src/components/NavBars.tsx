@@ -1,9 +1,12 @@
-"use client";
-import { useState } from "react";
-export default function NavBars() {
-  const [open, setOpen] = useState(false);
+export default function NavBars({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
-    <div className="cursor-pointer" onClick={() => setOpen(!open)}>
+    <div className={`cursor-pointer md:hidden `} onClick={() => setOpen(!open)}>
       {open ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
