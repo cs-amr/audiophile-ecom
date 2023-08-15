@@ -18,7 +18,7 @@ export default function Landing() {
         </p>
         <Link
           className="tracking-[0.0625rem bg-secClr px-[32px] py-[14px] text-[0.8125rem] font-bold text-white hover:opacity-90"
-          href={"/"}
+          href={"/headphones/cllcawtub0007uj4wu6h1li5m"}
         >
           SEE PRODUCT
         </Link>

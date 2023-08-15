@@ -11,8 +11,8 @@ export default function Header() {
   return (
     <header className="relative   bg-primaryClr px-6 ">
       <div
-        className={`absolute left-0 duration-300 ${
-          open ? "top-[90px] z-20" : "-top-[900px] "
+        className={`absolute left-0 z-20 duration-500 ${
+          open ? "top-[90px] " : "-top-[900px] "
         }  w-full bg-white md:hidden `}
       >
         <div className="container pb-10 pt-14">

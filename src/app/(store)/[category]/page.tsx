@@ -1,7 +1,6 @@
 export const revalidate = 0;
 import Product from "@/components/Product";
 import prisma from "../../../../db";
-import { Metadata } from "next";
 export default async function page({
   params,
 }: {
@@ -20,18 +19,25 @@ export default async function page({
       </div>
       <section className="">
         <div className="container mb-28 mt-16">
-          {products.map(({ name, description, productImage, isNew }, index) => {
-            return (
-              <Product
-                name={name}
-                description={description}
-                productImage={productImage}
-                isNew={isNew}
-                key={name}
-                index={index + 1}
-              />
-            );
-          })}
+          {products.map(
+            (
+              { name, description, productImage, isNew, id, category },
+              index,
+            ) => {
+              return (
+                <Product
+                  category={category}
+                  productId={id}
+                  name={name}
+                  description={description}
+                  productImage={productImage}
+                  isNew={isNew}
+                  key={name}
+                  index={index + 1}
+                />
+              );
+            },
+          )}
         </div>
       </section>
     </div>

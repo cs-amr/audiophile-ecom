@@ -6,14 +6,17 @@ export default function Product({
   productImage,
   isNew,
   index,
+  productId,
+  category,
 }: {
   name: string;
   description: string;
   productImage: { desktop: string; tablet: string; mobile: string };
   isNew: boolean;
   index: number;
+  productId: string;
+  category: string;
 }) {
-  console.log(name);
   return (
     <div
       className={`mb-20 flex flex-col items-center justify-center ${
@@ -37,7 +40,10 @@ export default function Product({
           {name}
         </h2>
         <p className="mb-6 text-gray-500">{description}</p>
-        <Link href={"/"} className="btn bg-secClr text-white hover:opacity-80">
+        <Link
+          href={"/" + category + "/" + productId}
+          className="btn bg-secClr text-white hover:opacity-80"
+        >
           SEE PRODUCT
         </Link>
       </div>
