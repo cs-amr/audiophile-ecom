@@ -1,11 +1,14 @@
-// import prisma from "../../../db";
 import { FormEvent } from "react";
 import prisma from "../../db";
 
-export async function addNewProduct(event: FormEvent) {
+export async function addNewProduct(
+  event: FormEvent,
+  setCartImg,
+  setGalleryImages,
+  setProductImage,
+) {
   event.preventDefault();
   const target = event?.target;
-  console.log(target);
   let productImage = JSON.parse(target?.productImage.value);
   let galleryImages = JSON.parse(target?.galleryImages.value);
   let item1 = target?.item1.value;
@@ -34,11 +37,23 @@ export async function addNewProduct(event: FormEvent) {
     includedItems: items,
     galleryImages,
   };
-  const response = await fetch("/api/product/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  try {
+    const response = await fetch("/api/product/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  } catch {
+  } finally {
+    setCartImg("");
+    setGalleryImages({ img1: "", img2: "", img3: "" });
+    setProductImage({
+      desktop: "",
+      tablet: "",
+      mobile: "",
+    });
+    target.reset();
+  }
 }

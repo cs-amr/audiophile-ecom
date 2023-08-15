@@ -26,7 +26,7 @@ export default function CardLink({
           SHOP
         </button>
         <img
-          src="https://utfs.io/f/dcf043da-85db-4e16-80c9-169b0539dc5c_icon-arrow-right.svg"
+          src="https://utfs.io/f/d91e1d26-7f6b-46d5-8675-fce940f59da8_icon-arrow-right.svg"
           alt=">"
           className="h-3 w-3"
         />

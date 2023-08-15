@@ -33,7 +33,12 @@ export default function Form({
       .then((data) => setCategories(data.categories));
   }, []);
   return (
-    <form onSubmit={addNewProduct} className="max-w-full ">
+    <form
+      onSubmit={(event) =>
+        addNewProduct(event, setCartImg, setGalleryImages, setProductImage)
+      }
+      className="max-w-full "
+    >
       <div className="mt-8 flex flex-wrap gap-10">
         <Label htmlFor="name">
           Name

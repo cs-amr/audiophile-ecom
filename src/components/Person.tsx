@@ -20,7 +20,7 @@ export default function Person() {
         </div>
         <div className="flex-1 rounded-xl">
           <img
-            src="https://utfs.io/f/67e7d677-538f-4ca8-83f3-d45196b7a2a2_image-best-gear.jpg"
+            src="https://utfs.io/f/a639f974-7606-4e15-a477-2fa8021a8931_image-best-gear.jpg"
             alt="person"
             className=" rounded-xl"
           />

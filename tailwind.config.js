@@ -24,6 +24,9 @@ module.exports = {
         xl: "1280px",
         "2xl": "1536px",
       },
+      fontFamily: {
+        manrope: ["Manrope", "sans-serif"],
+      },
       colors: {
         primaryClr: "#191919",
         secClr: "#d87d4a",

@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function Products() {
   return (
     <section className=" mt-20">
-      <div className=" flex  flex-col items-center rounded-xl bg-secClr bg-[url(https://uploadthing.com/f/24f34cf3-4c35-4c10-bc9b-4f444e011874_pattern-circles.svg)] bg-contain bg-no-repeat py-[55px] md:flex-row md:pb-[0px] md:pt-[96pxs]">
+      <div className=" flex  flex-col items-center rounded-xl bg-secClr bg-[url(https://utfs.io/f/b4723d26-7f74-455e-a946-4a77850daf4a_pattern-circles.svg)] bg-contain bg-no-repeat py-[55px] md:flex-row md:pb-[0px] md:pt-[96pxs]">
         <img
-          src="https://utfs.io/f/d64ade6f-12f0-4c6e-ab04-ae949142578f_image-speaker-zx9.png"
+          src="https://utfs.io/f/7dc5d88a-49fe-438d-b8c5-5be3ea19a274_image-speaker-zx9.png"
           alt=""
           className="w-[30%] md:ml-[138px] md:w-[50%]"
         />
@@ -25,7 +25,7 @@ export default function Products() {
           </Link>
         </div>
       </div>
-      <div className="mt-8 flex h-[400px] items-center overflow-hidden rounded-xl border bg-[url(https://utfs.io/f/b177af0e-4e45-4d1f-bfdd-956cacf61234_image-speaker-zx7.jpg)] bg-cover bg-[60%] bg-no-repeat">
+      <div className="mt-8 flex h-[400px] items-center overflow-hidden rounded-xl border bg-[url(https://utfs.io/f/f2ff4fd1-710a-4b19-a929-4035ff6274f7_image-speaker-zx7.jpg)] bg-cover bg-[60%] bg-no-repeat">
         <div className="ml-10 ">
           <h3 className="mb-4 text-[2.25rem] font-semibold uppercase">
             ZX7 Speaker
@@ -41,7 +41,7 @@ export default function Products() {
       <div className="mt-8 flex flex-col gap-8 sm:flex-row ">
         <div className="flex-1 overflow-hidden rounded-xl">
           <img
-            src="https://utfs.io/f/31c9ec90-c48c-4432-b0fa-7a7fc84973aa_image-earphones-yx1.jpg"
+            src="https://utfs.io/f/b97cc233-da5f-430d-8c7d-1d0266158bab_image-earphones-yx1.jpg"
             alt=""
             className="rounded-xl"
           />
