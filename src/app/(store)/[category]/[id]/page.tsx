@@ -4,6 +4,7 @@ import Link from "next/link";
 import AddToCard from "@/components/AddToCard";
 import CategoryLinks from "@/components/CategoryLinks";
 import NewProductLink from "@/components/NewProductLink";
+import ReduxProvider from "@/components/ReduxProvider";
 export default async function page({ params }: { params: { id: string } }) {
   const product = await prisma.product.findUnique({
     where: { id: params.id },
@@ -50,10 +51,13 @@ export default async function page({ params }: { params: { id: string } }) {
             </h2>
             <p className="text-gray-500">{product?.description}</p>
             <p className="my-4 font-bold"> ${product?.price}</p>
-            <AddToCard
-              cartImage={product?.cartImage}
-              shortName={product?.shortName}
-            />
+            <ReduxProvider>
+              <AddToCard
+                cartImage={product?.cartImage}
+                shortName={product?.shortName}
+                price={product?.price}
+              />
+            </ReduxProvider>
           </div>
         </div>
         <div className="mt-20 flex flex-col md:flex-row md:gap-10">

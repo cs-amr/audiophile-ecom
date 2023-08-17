@@ -5,6 +5,8 @@ import CartIcon from "./CartIcon";
 import NavBars from "./NavBars";
 import Image from "next/image";
 import CategoryLinks from "./CategoryLinks";
+import { Provider } from "react-redux";
+import { store } from "@/app/store";
 export default function Header() {
   const [open, setOpen] = useState(false);
 
@@ -46,8 +48,9 @@ export default function Header() {
             EARPHONES
           </Link>
         </nav>
-
-        <CartIcon />
+        <Provider store={store}>
+          <CartIcon />
+        </Provider>
       </div>
     </header>
   );
