@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Product({
@@ -11,7 +12,11 @@ export default function Product({
 }: {
   name: string;
   description: string;
-  productImage: { desktop: string; tablet: string; mobile: string };
+  productImage: {
+    desktop: string | null;
+    tablet: string | null;
+    mobile: string | null;
+  };
   isNew: boolean;
   index: number;
   productId: string;
@@ -24,7 +29,12 @@ export default function Product({
       }`}
     >
       <div className="flex-1">
-        <img alt="alt" src={productImage.desktop} />
+        <Image
+          alt="alt"
+          width={500}
+          height={500}
+          src={productImage?.desktop ?? ""}
+        />
       </div>
       <div
         className={`flex-1  text-center  ${

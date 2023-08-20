@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,13 +10,19 @@ export default function NewProductLink({
 }: {
   id: string;
   category: string;
-  productImage: string;
+  productImage: string | null;
   shortName: string;
 }) {
   return (
     <div className=" mx-2 mt-6 flex flex-col justify-center">
       <div className=" max-w-[350px]">
-        <img src={productImage} alt="productImage" className="rounded-xl" />
+        <Image
+          src={productImage ?? ""}
+          alt="productImage"
+          className="rounded-xl"
+          width={500}
+          height={500}
+        />
       </div>
       <div className="my-4 h-6  text-center text-[1.5rem] font-bold">
         {shortName}

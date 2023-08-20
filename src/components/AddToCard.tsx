@@ -8,10 +8,12 @@ export default function AddToCard({
   cartImage,
   shortName,
   price,
+  priceId,
 }: {
-  cartImage: string;
-  shortName: string;
-  price: number;
+  cartImage: string | undefined;
+  shortName: string | undefined;
+  price: number | undefined;
+  priceId: string | undefined;
 }) {
   const [productCount, setProductCount] = useState<number>(1);
   const { cart } = useSelector((state: RootState) => state.cart);
@@ -20,6 +22,7 @@ export default function AddToCard({
     productCount,
     cartImage,
     price,
+    priceId,
   };
   const dispatch = useDispatch();
 
@@ -42,6 +45,7 @@ export default function AddToCard({
             productCount: productCount + existingItem.productCount,
             cartImage,
             price,
+            priceId,
           };
         } else {
           return cartProduct;

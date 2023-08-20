@@ -1,6 +1,7 @@
 export const revalidate = 0;
 import Product from "@/components/Product";
 import prisma from "../../../../db";
+import { notFound } from "next/navigation";
 export default async function page({
   params,
 }: {
@@ -11,6 +12,9 @@ export default async function page({
       category: params.category,
     },
   });
+  if (!products.length) {
+    notFound();
+  }
 
   return (
     <div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export default function Person() {
@@ -19,9 +20,14 @@ export default function Person() {
           </p>
         </div>
         <div className="flex-1 rounded-xl">
-          <img
+          <Image
             src="https://utfs.io/f/a639f974-7606-4e15-a477-2fa8021a8931_image-best-gear.jpg"
             alt="person"
+            height={500}
+            width={500}
+            style={{
+              objectFit: "contain", // cover, contain, none
+            }}
             className=" rounded-xl"
           />
         </div>

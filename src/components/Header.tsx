@@ -5,8 +5,9 @@ import CartIcon from "./CartIcon";
 import NavBars from "./NavBars";
 import Image from "next/image";
 import CategoryLinks from "./CategoryLinks";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "@/app/store";
+import { setCart } from "@/app/features/cart/cartSlice";
 export default function Header() {
   const [open, setOpen] = useState(false);
 
@@ -23,7 +24,9 @@ export default function Header() {
       </div>
       <div className="mx-auto flex h-full max-w-[1160px] justify-between border-b border-[rgba(255,255,255,0.1)] py-8">
         <NavBars open={open} setOpen={setOpen} />
-        <Image src={"/logo.svg"} width={150} height={50} alt="audiophile" />
+        <Link href={"/"}>
+          <Image src={"/logo.svg"} width={150} height={50} alt="audiophile" />
+        </Link>
 
         <nav className="hidden font-semibold text-white md:block">
           <Link className={`mx-4 duration-75 hover:text-secClr`} href={"/"}>

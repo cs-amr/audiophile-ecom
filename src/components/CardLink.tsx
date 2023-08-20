@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -13,10 +14,12 @@ export default function CardLink({
       href={"/" + category}
       className="relative flex flex-grow flex-col items-center rounded-xl bg-[#f1f1f1] pb-[22px] pt-[88px] text-center"
     >
-      <img
+      <Image
         src={img}
         alt="category"
         className="absolute -top-10   h-[132px] w-[138px]"
+        width={100}
+        height={100}
       />
       <h2 className="mb-2 font-semibold uppercase  tracking-wider">
         {category}
@@ -25,10 +28,12 @@ export default function CardLink({
         <button className=" font-medium text-primaryClr hover:text-secClr ">
           SHOP
         </button>
-        <img
+        <Image
           src="https://utfs.io/f/d91e1d26-7f6b-46d5-8675-fce940f59da8_icon-arrow-right.svg"
-          alt=">"
+          alt=""
           className="h-3 w-3"
+          width={100}
+          height={100}
         />
       </div>
     </Link>

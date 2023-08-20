@@ -80,7 +80,7 @@ const ProductsPage = ({}: {}) => {
                   <Label htmlFor="desktop" className="m-2">
                     Desktop <br />
                   </Label>
-                  <img
+                  <Image
                     className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                     src={
                       ProductImage.desktop
@@ -111,7 +111,7 @@ const ProductsPage = ({}: {}) => {
                   <Label htmlFor="desktop" className="m-2">
                     Tablet <br />
                   </Label>
-                  <img
+                  <Image
                     className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                     src={
                       ProductImage.tablet
@@ -142,7 +142,7 @@ const ProductsPage = ({}: {}) => {
                   <Label htmlFor="desktop" className="m-2">
                     Mobile <br />
                   </Label>
-                  <img
+                  <Image
                     className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                     src={
                       ProductImage.mobile
@@ -180,7 +180,7 @@ const ProductsPage = ({}: {}) => {
                   <Label htmlFor="desktop" className="m-2">
                     Image 1 <br />
                   </Label>
-                  <img
+                  <Image
                     className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                     src={
                       GalleryImages.img1
@@ -211,7 +211,7 @@ const ProductsPage = ({}: {}) => {
                   <Label htmlFor="desktop" className="m-2">
                     Image 2 <br />
                   </Label>
-                  <img
+                  <Image
                     className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                     src={
                       GalleryImages.img2
@@ -242,7 +242,7 @@ const ProductsPage = ({}: {}) => {
                   <Label htmlFor="desktop" className="m-2">
                     Image 3 <br />
                   </Label>
-                  <img
+                  <Image
                     className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                     src={
                       GalleryImages.img3
@@ -274,7 +274,7 @@ const ProductsPage = ({}: {}) => {
                 <Label htmlFor="desktop" className="m-2">
                   Cart Image <br />
                 </Label>
-                <img
+                <Image
                   className="mb-4 h-[120px] rounded-lg border  object-scale-down  "
                   src={
                     CartImg

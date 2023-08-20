@@ -27,6 +27,7 @@ model Product {
   name          String
   shortName     String
   price         Float
+  priceId       String
   description   String
   features      String
   isNew         Boolean

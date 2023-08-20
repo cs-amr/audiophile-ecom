@@ -1,6 +1,8 @@
+"use client";
 import { setCart } from "@/app/features/cart/cartSlice";
 import { RootState } from "@/app/store";
-import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 type product = {
@@ -10,6 +12,8 @@ type product = {
   cartImage: string;
 };
 export default function CartIcon() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState(false);
   const { cart } = useSelector((state: RootState) => state.cart);
   const productCount = cart.reduce(
@@ -62,6 +66,19 @@ export default function CartIcon() {
     dispatch(setCart(newCart));
     localStorage.setItem("cart", JSON.stringify(newCart));
   }
+  const isDisabled = isLoading || productCount === 0;
+  async function onCheckout() {
+    setIsLoading(true);
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      body: JSON.stringify(cart),
+    });
+
+    const session = await response.json();
+    setIsLoading(false);
+    router.push(session.url);
+    dispatch(setCart([]));
+  }
   return (
     <div
       className="relative  h-[22px] w-[24px]"
@@ -70,7 +87,7 @@ export default function CartIcon() {
         setCartOpen(true);
       }}
     >
-      <img src="/icon-cart.svg" alt="" />
+      <Image width={500} height={500} src="/icon-cart.svg" alt="" />
       <div className="absolute -right-2 -top-2 z-10 flex  h-[10px] w-[10px] items-center justify-center rounded-full bg-secClr p-[10px] text-center font-semibold text-white">
         {productCount}
       </div>
@@ -96,16 +113,24 @@ export default function CartIcon() {
                 className="font-thin text-gray-500 underline"
                 onClick={removeAll}
               >
-                Remove all
+                {productCount ? "Remove all" : ""}
               </button>
             </div>
             <ul className="  mb-8 " onClick={(e) => e.stopPropagation()}>
               {cart.map((product: product) => {
                 return (
-                  <li className="mt-8 flex items-center justify-between">
+                  <li
+                    key={product.shortName}
+                    className="mt-8 flex items-center justify-between"
+                  >
                     <div className="flex h-16  w-16">
                       {" "}
-                      <img src={product.cartImage} alt="" />
+                      <Image
+                        width={500}
+                        height={500}
+                        src={product.cartImage}
+                        alt=""
+                      />
                       <div className="ml-2 font-semibold">
                         <p className="w-[10ch]">{product.shortName}</p>
                         <p className="text-gray-500">${product.price}</p>
@@ -132,20 +157,30 @@ export default function CartIcon() {
                 );
               })}
             </ul>
+            <div className="flex justify-between text-base text-gray-400">
+              <span className="mr-auto">shipping</span>
+              <span className="ml-auto font-semibold text-primaryClr">
+                ${total ? "30" : "0"}
+              </span>
+            </div>
             <div
               className="mb-6 flex justify-between text-[0.9375rem] leading-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="tracking-wider">TOTAL</div>
-              <div className="text-[1.125rem] font-semibold ">${total}</div>
+              <div className="text-[1.125rem] font-semibold ">
+                ${total ? total + 30 : 0}
+              </div>
             </div>
-            <Link
-              onClick={(e) => e.stopPropagation()}
-              href={"/checkout"}
-              className="btn block min-w-full bg-secClr text-center uppercase text-white hover:opacity-80"
+            <button
+              onClick={onCheckout}
+              disabled={isDisabled}
+              className={`btn block min-w-full bg-secClr text-center uppercase text-white hover:opacity-80 ${
+                isDisabled && "opacity-80"
+              }`}
             >
-              checkout
-            </Link>
+              {isLoading ? "...loading" : "checkout"}
+            </button>
           </div>
         </div>
       </div>
