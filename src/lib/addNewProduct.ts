@@ -1,11 +1,10 @@
 import { FormEvent } from "react";
-import prisma from "../../db";
 
 export async function addNewProduct(
-  event: FormEvent,
-  setCartImg,
-  setGalleryImages,
-  setProductImage,
+  event: FormEvent | FormData | any,
+  setCartImg: React.Dispatch<React.SetStateAction<any>>,
+  setGalleryImages: React.Dispatch<React.SetStateAction<any>>,
+  setProductImage: React.Dispatch<React.SetStateAction<any>>,
 ) {
   event.preventDefault();
   const target = event?.target;
@@ -36,8 +35,26 @@ export async function addNewProduct(
     cartImage: target?.cartImage?.value,
     includedItems: items,
     galleryImages,
+    priceId: "",
   };
   try {
+    const res = await fetch("/api/stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: target.name.value,
+        image: target?.cartImage?.value,
+        default_price_data: {
+          currency: "USD",
+          unit_amount: target?.price.value,
+        },
+      }),
+    });
+    const { default_price } = await res.json();
+    console.log(default_price);
+    data.priceId = default_price;
     const response = await fetch("/api/product/create", {
       method: "POST",
       headers: {

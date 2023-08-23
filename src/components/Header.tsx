@@ -5,9 +5,8 @@ import CartIcon from "./CartIcon";
 import NavBars from "./NavBars";
 import Image from "next/image";
 import CategoryLinks from "./CategoryLinks";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "@/app/store";
-import { setCart } from "@/app/features/cart/cartSlice";
 export default function Header() {
   const [open, setOpen] = useState(false);
 
@@ -52,7 +51,26 @@ export default function Header() {
           </Link>
         </nav>
         <Provider store={store}>
-          <CartIcon />
+          <div className="flex">
+            <CartIcon />
+            <Link href={"/login"} className="text-white">
+              <svg
+                className="feather feather-user ml-4"
+                fill="none"
+                height="26"
+                width="26"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </Link>
+          </div>
         </Provider>
       </div>
     </header>

@@ -17,7 +17,7 @@ export default async function page() {
   const categories = await prisma.category.findMany();
 
   return (
-    <main className="max-w-[1334px] mx-auto">
+    <main className="mx-auto max-w-[1334px]">
       <div className="flex-col">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <Heading
@@ -30,10 +30,9 @@ export default async function page() {
 
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">name</TableHead>
-                <TableHead>products</TableHead>
+                <TableHead>category</TableHead>
+                <TableHead className="">id</TableHead>
                 <TableHead>date</TableHead>
-                <TableHead className="text-right">sales</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -41,9 +40,9 @@ export default async function page() {
                 return (
                   <TableRow key={category.id}>
                     <TableCell className="font-medium">
-                      {category?.name}
+                      {category.name}
                     </TableCell>
-                    <TableCell>3</TableCell>
+                    <TableCell>{category?.id}</TableCell>
                     <TableCell>
                       {(category?.createdAt)
                         .toString()
@@ -51,7 +50,6 @@ export default async function page() {
                         .replace(" ", "-")
                         .replace(" ", "-")}
                     </TableCell>
-                    <TableCell className="text-right">$250.00</TableCell>
                   </TableRow>
                 );
               })}

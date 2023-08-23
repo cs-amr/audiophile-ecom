@@ -16,9 +16,26 @@ import {
 import Form from "./Form";
 import Image from "next/image";
 import { Label } from "@radix-ui/react-label";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { string } from "zod";
+type Prodcut = {
+  id: string;
+  name: string;
+  shortName: string;
+  price: number;
+  priceId: string;
+  description: string;
+  features: string;
+  isNew: boolean;
+  category: string;
+  productImage: { desktop: string; tablet: string; mobile: string };
+  cartImage: string;
+  includedItems: { item: string; quantity: number }[];
+  galleryImages: { img1: string; img2: string; img3: string };
+  createdAt: string;
+};
 const ProductsPage = ({}: {}) => {
+  const [products, setProducts] = useState<Prodcut[]>([]);
   const [ProductImage, setProductImage] = useState<{
     desktop: string;
     tablet: string;
@@ -38,12 +55,22 @@ const ProductsPage = ({}: {}) => {
     img3: "",
   });
   const [CartImg, setCartImg] = useState<string>("");
+  useEffect(() => {
+    async function getProducts() {
+      const res = await fetch("/api/product");
+      const data = await res.json();
+      setProducts(data);
+      return data;
+    }
+    getProducts();
+  }, []);
+
   return (
     <main className="mx-auto max-w-[1334px]">
       <div className=" ">
         <div className="flex-1  space-y-4 p-8 pt-6">
           <Heading
-            title="Products (3)"
+            title={`Products (${products.length})`}
             description="Manage products of your store"
           />
           <Separator />
@@ -51,19 +78,29 @@ const ProductsPage = ({}: {}) => {
             <TableCaption>A list of your products.</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[150px]">name</TableHead>
-                <TableHead>stock</TableHead>
-                <TableHead>data</TableHead>
-                <TableHead className="text-right">sales</TableHead>
+                <TableHead className="">name</TableHead>
+                <TableHead className="">short name</TableHead>
+                <TableHead>status</TableHead>
+                <TableHead className="text-center">date</TableHead>
+                <TableHead className="">price</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">headphones ii</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>25-07-2023</TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
-              </TableRow>
+              {products?.map((product: Prodcut) => {
+                let date: any = new Date(product.createdAt);
+                date = date.toDateString();
+                return (
+                  <TableRow key={product.id}>
+                    <TableCell className="font-medium">
+                      {product.name}
+                    </TableCell>
+                    <TableCell>{product.shortName}</TableCell>
+                    <TableCell>{product.isNew ? "new" : "old"}</TableCell>
+                    <TableCell className="text-center">{date}</TableCell>
+                    <TableCell className="">${product.price}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
 

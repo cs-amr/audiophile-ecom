@@ -10,6 +10,7 @@ type product = {
   price: number;
   productCount: number;
   cartImage: string;
+  priceId: string;
 };
 export default function CartIcon() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function CartIcon() {
   }
   function decreaseAmount(product: product) {
     if (product.productCount == 1) {
-      const newCart: [] | product[] = [];
+      const newCart: product[] = [];
       cart.forEach((item: product) => {
         if (item.shortName != product.shortName) newCart.push(item);
       });

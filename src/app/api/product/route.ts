@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-
-  return NextResponse.json({ Message: "success" }, { status: 200 });
+import prisma from "../../../../db";
+export async function GET(req: NextRequest) {
+  try {
+    const res = await prisma.product.findMany();
+    return NextResponse.json(res);
+  } catch (error) {
+    return NextResponse.json(error, { status: 404 });
+  }
 }

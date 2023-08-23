@@ -1,6 +1,12 @@
+"use client";
 import { createSlice } from "@reduxjs/toolkit";
-let cart = localStorage.getItem("cart");
-cart = JSON.parse(cart);
+let cart: {
+  shortName: string;
+  productCount: number;
+  cartImage: string;
+  price: number;
+  priceId: string;
+}[] = [];
 
 const cartSlice = createSlice({
   name: "cart",

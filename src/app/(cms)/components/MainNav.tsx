@@ -9,6 +9,9 @@ export function MainNav({
 }: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
   console.log(pathname);
+
+  const path = pathname.slice(-pathname.lastIndexOf("/") - 1);
+
   const routes = [
     {
       href: `/dashboard`,
@@ -26,25 +29,19 @@ export function MainNav({
       href: `/dashboard/orders`,
       label: "Orders",
     },
-    {
-      href: `/dashboard/settings`,
-      label: "Settings",
-    },
   ];
 
   return (
     <nav
       className={
-        "xs:py-0 py-8 flex items-center text-center space-x-4 lg:space-x-6 mx-auto xs:static absolute -left-full top-0 xs:w-fit w-screen   h-screen xs:h-full bg-white flex-col xs:flex-row "
+        "absolute -left-full top-0 mx-auto flex h-screen w-screen flex-col items-center space-x-4 bg-white py-8 text-center xs:static   xs:h-full xs:w-fit xs:flex-row xs:py-0 lg:space-x-6 "
       }
     >
       {routes.map((route) => (
         <Link
           key={route.href}
           href={route.href}
-          className={`  xs:my-0 my-4 w-full xs:w-fit  text-center  text-sm font-medium transition-colors hover:text-primary text-black'${
-            route.href === pathname && "text-5xl"
-          }`}
+          className={`  my-4 w-full text-center   font-medium  text-primaryClr transition-colors hover:text-primary xs:my-0 xs:w-fit '${""}`}
         >
           {route.label}
         </Link>

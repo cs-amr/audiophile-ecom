@@ -2,6 +2,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addNewProduct } from "@/lib/addNewProduct";
 import { useLayoutEffect, useState } from "react";
+type Category = {
+  id: string;
+  name: string;
+};
 type FormProps = {
   ProductImage: {
     desktop: string;
@@ -26,7 +30,7 @@ export default function Form({
   CartImg,
   setCartImg,
 }: FormProps) {
-  const [Categories, setCategories] = useState(null);
+  const [Categories, setCategories] = useState<Category[]>([]);
   useLayoutEffect(() => {
     fetch("/api/categories")
       .then((res) => res.json())
