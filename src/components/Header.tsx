@@ -53,9 +53,9 @@ export default function Header() {
         <Provider store={store}>
           <div className="flex">
             <CartIcon />
-            <Link href={"/login"} className="text-white">
+            <Link href={"/login"} className="mb-1 text-white">
               <svg
-                className="feather feather-user ml-4"
+                className="feather feather-user -mt-1 ml-4"
                 fill="none"
                 height="26"
                 width="26"

@@ -12,7 +12,7 @@ export default async function page({
       category: params.category,
     },
   });
-  if (!products.length) {
+  if (products.length < 1) {
     notFound();
   }
 

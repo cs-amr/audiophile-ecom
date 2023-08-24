@@ -6,7 +6,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 const Navbar = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
+  console.log(session);
   if (!session) {
     redirect("/login");
   }

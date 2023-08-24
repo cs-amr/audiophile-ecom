@@ -3,19 +3,20 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "../../../../../db";
 import bcrypt from "bcryptjs";
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+import { NextAuthOptions } from "next-auth";
+import { Adapter } from "next-auth/adapters";
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     CredentialsProvider({
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "password", type: "password" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          console.log("1");
-          return null;
+          return Promise.reject();
         }
         const user = await prisma.user.findUnique({
           where: {
@@ -23,18 +24,14 @@ export const authOptions = {
           },
         });
         if (!user) {
-          console.log("2");
-
-          return null;
+          return Promise.reject();
         }
         const passwordMatch = await bcrypt.compare(
           credentials.password,
           user.password,
         );
         if (!passwordMatch) {
-          console.log("3");
-
-          return null;
+          return Promise.reject();
         }
 
         return user;

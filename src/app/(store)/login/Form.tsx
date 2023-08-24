@@ -1,18 +1,22 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Form() {
+  const router = useRouter();
   async function login(e: any) {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const user = await signIn("credentials", {
+    const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
+    router.push("/dashboard");
   }
   return (
     <div>
