@@ -8,7 +8,6 @@ export function MainNav({
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
-  console.log(pathname);
 
   const path = pathname.slice(-pathname.lastIndexOf("/") - 1);
 

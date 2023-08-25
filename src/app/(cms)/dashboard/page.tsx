@@ -4,11 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, DollarSign, Package } from "lucide-react";
 import { stripe } from "@/lib/stripe";
-import { getServerSession } from "next-auth";
 
 export default async function Dashboard() {
-  const d = await getServerSession();
-  console.log(d);
   const data = await stripe.balance.retrieve();
   const charges = await stripe.charges.list();
   const prodcuts = await stripe.prices.list({ active: true });

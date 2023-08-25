@@ -3,11 +3,13 @@
 import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Form() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   async function login(e: any) {
+    setIsLoading(true);
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -17,6 +19,7 @@ export default function Form() {
       redirect: false,
     });
     router.push("/dashboard");
+    setIsLoading(false);
   }
   return (
     <div>
@@ -48,7 +51,7 @@ export default function Form() {
           />
           <br />
           <button className="btn bg-secClr text-white hover:opacity-80">
-            Log in
+            {isLoading ? "...Log in" : "Log in"}
           </button>
           <br />
         </form>

@@ -11,11 +11,11 @@ export default function Form() {
         id="name"
         required
         placeholder="headphones"
-        className="p-1 my-1 border focus:border focus:outline-none"
+        className="my-1 border p-1 focus:border focus:outline-none"
       />
       <button
         type="submit"
-        className="bg-black  text-white p-1 rounded-sm px-3"
+        className="ml-4 rounded-sm bg-black p-1 px-3 text-white"
       >
         add
       </button>

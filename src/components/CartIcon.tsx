@@ -3,7 +3,7 @@ import { setCart } from "@/app/features/cart/cartSlice";
 import { RootState } from "@/app/store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 type product = {
   shortName: string;
@@ -13,11 +13,19 @@ type product = {
   priceId: string;
 };
 export default function CartIcon() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const cartFromStorage = localStorage.getItem("cart");
+    const cart = JSON.parse(cartFromStorage as string);
+    if (cartFromStorage) {
+      dispatch(setCart(cart));
+    }
+  }, []);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState(false);
   const { cart } = useSelector((state: RootState) => state.cart);
-  const productCount = cart.reduce(
+  const productCount = cart?.reduce(
     (accumulator, product: product) => accumulator + product.productCount,
     0,
   );
@@ -26,7 +34,6 @@ export default function CartIcon() {
       accumulator + product.productCount * product.price,
     0,
   );
-  const dispatch = useDispatch();
   function removeAll() {
     localStorage.setItem("cart", JSON.stringify([]));
     dispatch(setCart([]));
@@ -40,7 +47,7 @@ export default function CartIcon() {
       dispatch(setCart(newCart));
       return;
     }
-    const newCart = cart.map((item: product) => {
+    const newCart = cart?.map((item: product) => {
       if (item.shortName === product.shortName) {
         return {
           ...product,
@@ -54,7 +61,7 @@ export default function CartIcon() {
     localStorage.setItem("cart", JSON.stringify(newCart));
   }
   function increaseAmount(product: product) {
-    const newCart = cart.map((item: product) => {
+    const newCart = cart?.map((item: product) => {
       if (item.shortName === product.shortName) {
         return {
           ...product,
@@ -78,6 +85,8 @@ export default function CartIcon() {
     const session = await response.json();
     setIsLoading(false);
     router.push(session.url);
+    setCartOpen(false);
+    localStorage.setItem("cart", JSON.stringify([]));
     dispatch(setCart([]));
   }
   return (
@@ -118,7 +127,7 @@ export default function CartIcon() {
               </button>
             </div>
             <ul className="  mb-8 " onClick={(e) => e.stopPropagation()}>
-              {cart.map((product: product) => {
+              {cart?.map((product: product) => {
                 return (
                   <li
                     key={product.shortName}

@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartIcon from "./CartIcon";
 import NavBars from "./NavBars";
 import Image from "next/image";
 import CategoryLinks from "./CategoryLinks";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "@/app/store";
 export default function Header() {
   const [open, setOpen] = useState(false);

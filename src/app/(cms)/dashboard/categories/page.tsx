@@ -15,7 +15,6 @@ import prisma from "../../../../../db";
 
 export default async function page() {
   const categories = await prisma.category.findMany();
-
   return (
     <main className="mx-auto max-w-[1334px]">
       <div className="flex-col">

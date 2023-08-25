@@ -41,7 +41,7 @@ export default function Product({
           index % 2 ? "md:pl-32" : "md:pr-32"
         }  md:text-left`}
       >
-        <h2 className="mx-auto mb-6 mt-4 w-[12ch] text-center text-[1.75rem] font-bold uppercase leading-[1.7rem] md:mx-0">
+        <h2 className="mx-auto mb-6 mt-4 w-[12ch] text-center text-[1.75rem] font-bold uppercase leading-[1.7rem] md:mx-0 md:text-left">
           {" "}
           <strong className=" -mb-4 block text-[0.875rem]  font-light  tracking-[0.625rem] text-secClr ">
             {isNew ? "NEW PRODUCT" : ""}

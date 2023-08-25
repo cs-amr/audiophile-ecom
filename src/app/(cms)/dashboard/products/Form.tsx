@@ -2,6 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addNewProduct } from "@/lib/addNewProduct";
 import { useLayoutEffect, useState } from "react";
+import { Prodcut } from "./page";
+import editProduct from "@/lib/editProduct";
 type Category = {
   id: string;
   name: string;
@@ -21,6 +23,8 @@ type FormProps = {
   setGalleryImages: React.Dispatch<React.SetStateAction<any>>;
   CartImg: string;
   setCartImg: React.Dispatch<React.SetStateAction<any>>;
+  editingProduct: Prodcut | null;
+  setEditingProduct: React.Dispatch<React.SetStateAction<any>>;
 };
 export default function Form({
   ProductImage,
@@ -29,17 +33,31 @@ export default function Form({
   setGalleryImages,
   CartImg,
   setCartImg,
+  editingProduct,
+  setEditingProduct,
 }: FormProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [Categories, setCategories] = useState<Category[]>([]);
   useLayoutEffect(() => {
     fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data.categories));
   }, []);
+
   return (
     <form
-      onSubmit={(event) =>
-        addNewProduct(event, setCartImg, setGalleryImages, setProductImage)
+      onSubmit={
+        editingProduct
+          ? (event) => editProduct(event, editingProduct, setIsLoading)
+          : (event) =>
+              addNewProduct(
+                event,
+                setCartImg,
+                setGalleryImages,
+                setProductImage,
+                isLoading,
+                setIsLoading,
+              )
       }
       className="max-w-full "
     >
@@ -53,6 +71,7 @@ export default function Form({
             required
             placeholder="YX1 Wireless Earphones"
             className="my-2 w-[144px]"
+            defaultValue={editingProduct ? editingProduct.name : ""}
           />
         </Label>
 
@@ -64,6 +83,7 @@ export default function Form({
             id="shortname"
             required
             placeholder="YX1"
+            defaultValue={editingProduct ? editingProduct.shortName : ""}
             className="my-2 w-[144px]"
           />
         </Label>
@@ -77,6 +97,7 @@ export default function Form({
             required
             placeholder="100"
             className="my-2 w-[144px]"
+            defaultValue={editingProduct ? editingProduct.price : ""}
           />
         </Label>
       </div>
@@ -88,6 +109,9 @@ export default function Form({
             name="isnew"
             id="new"
             className=" my-1 border p-1 focus:border focus:outline-none"
+            defaultValue={
+              editingProduct ? (editingProduct.isNew ? "yes" : "no") : "yes"
+            }
           >
             <option value="yes">Yes</option>
             <option value="no">no</option>
@@ -100,6 +124,9 @@ export default function Form({
             name="category"
             id="category"
             className=" my-1 border p-1 focus:border focus:outline-none"
+            defaultValue={
+              editingProduct ? editingProduct.category : "headphones"
+            }
           >
             {Categories &&
               Categories?.map((category: { id: string; name: string }) => {
@@ -125,6 +152,7 @@ export default function Form({
             id="description"
             rows={4}
             required
+            defaultValue={editingProduct ? editingProduct.description : ""}
             placeholder="write your description "
             className="my-2 min-w-full max-w-full border border-slate-400 p-2 focus:outline-none "
           />
@@ -134,6 +162,7 @@ export default function Form({
           Features <br />
           <textarea
             name="features"
+            defaultValue={editingProduct ? editingProduct.features : ""}
             id="features"
             rows={4}
             required
@@ -167,6 +196,9 @@ export default function Form({
             required
             placeholder="charger"
             className="my-2 w-[144px] flex-[3]"
+            defaultValue={
+              editingProduct ? editingProduct.includedItems[0].item : ""
+            }
           />
           <Input
             type="number"
@@ -174,6 +206,9 @@ export default function Form({
             id=""
             className="flex-[2]"
             placeholder="1"
+            defaultValue={
+              editingProduct ? editingProduct.includedItems[0].quantity : ""
+            }
           />
         </div>
         <div className="flex items-center gap-4">
@@ -184,6 +219,9 @@ export default function Form({
             required
             placeholder="charger"
             className="my-2 w-[144px] flex-[3]"
+            defaultValue={
+              editingProduct ? editingProduct.includedItems[1].item : ""
+            }
           />
           <Input
             type="number"
@@ -191,6 +229,9 @@ export default function Form({
             id=""
             className="flex-[2]"
             placeholder="1"
+            defaultValue={
+              editingProduct ? editingProduct.includedItems[1].quantity : ""
+            }
           />
         </div>
         <div className="flex items-center gap-4">
@@ -201,6 +242,9 @@ export default function Form({
             required
             placeholder="charger"
             className="my-2 w-[144px] flex-[3]"
+            defaultValue={
+              editingProduct ? editingProduct.includedItems[2].item : ""
+            }
           />
           <Input
             type="number"
@@ -208,15 +252,51 @@ export default function Form({
             id=""
             className="flex-[2]"
             placeholder="1"
+            defaultValue={
+              editingProduct ? editingProduct.includedItems[2].quantity : ""
+            }
           />
         </div>
       </Label>
-      <button
-        type="submit"
-        className="rounded-sm  bg-black p-1 px-3 text-white"
-      >
-        add
-      </button>
+      {editingProduct ? (
+        <div>
+          <button
+            disabled={isLoading}
+            type="submit"
+            className=" mr-4 mt-2 rounded-sm  bg-black p-1 px-3 text-white"
+          >
+            Edit
+            {isLoading ? "...editing" : "Edit"}
+          </button>
+          <button
+            className=" mr-4 mt-2 rounded-sm  bg-black p-1 px-3 text-white"
+            onClick={() => {
+              setEditingProduct(null);
+              setCartImg("");
+              setProductImage({
+                desktop: "",
+                tablet: "",
+                mobile: "",
+              });
+              setGalleryImages({
+                img1: "",
+                img2: "",
+                img3: "",
+              });
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <button
+          disabled={isLoading}
+          type="submit"
+          className=" mr-4 mt-2 rounded-sm  bg-black p-1 px-3 text-white"
+        >
+          {isLoading ? "...adding" : "add"}
+        </button>
+      )}
     </form>
   );
 }

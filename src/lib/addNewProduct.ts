@@ -5,6 +5,8 @@ export async function addNewProduct(
   setCartImg: React.Dispatch<React.SetStateAction<any>>,
   setGalleryImages: React.Dispatch<React.SetStateAction<any>>,
   setProductImage: React.Dispatch<React.SetStateAction<any>>,
+  isLoading: boolean,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   event.preventDefault();
   const target = event?.target;
@@ -26,6 +28,7 @@ export async function addNewProduct(
   const data = {
     name: target?.name?.value,
     shortName: target?.shortname?.value,
+    productId: "",
     price,
     description: target?.description?.value,
     features: target?.features?.value,
@@ -37,7 +40,9 @@ export async function addNewProduct(
     galleryImages,
     priceId: "",
   };
+  console.log(data);
   try {
+    setIsLoading(true);
     const res = await fetch("/api/stripe", {
       method: "POST",
       headers: {
@@ -48,13 +53,14 @@ export async function addNewProduct(
         image: target?.cartImage?.value,
         default_price_data: {
           currency: "USD",
-          unit_amount: target?.price.value,
+          unit_amount: target?.price.value * 100,
         },
       }),
     });
-    const { default_price } = await res.json();
-    console.log(default_price);
+    const { default_price, id } = await res.json();
+
     data.priceId = default_price;
+    data.productId = id;
     const response = await fetch("/api/product/create", {
       method: "POST",
       headers: {
@@ -64,6 +70,7 @@ export async function addNewProduct(
     });
   } catch {
   } finally {
+    setIsLoading(false);
     setCartImg("");
     setGalleryImages({ img1: "", img2: "", img3: "" });
     setProductImage({
