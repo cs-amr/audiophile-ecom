@@ -1,6 +1,7 @@
 "use client";
 import { setCart } from "@/app/features/cart/cartSlice";
 import { RootState } from "@/app/store";
+import { stripe } from "@/lib/stripe";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -80,12 +81,18 @@ export default function CartIcon() {
     const response = await fetch("/api/checkout", {
       method: "POST",
       body: JSON.stringify(cart),
-    });
-
-    const session = await response.json();
-    setIsLoading(false);
-    router.push(session.url);
-    setCartOpen(false);
+    })
+      .then((response) => {
+        const session = response.json();
+        return session;
+      })
+      .then((session) => {
+        setIsLoading(false);
+        router.push(session.url);
+        setCartOpen(false);
+        return session;
+      })
+      .then((session) => {});
     localStorage.setItem("cart", JSON.stringify([]));
     dispatch(setCart([]));
   }

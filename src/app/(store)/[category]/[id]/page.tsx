@@ -99,14 +99,14 @@ export default async function page({ params }: { params: { id: string } }) {
           <div className="flex flex-1 flex-col gap-[1.25rem]">
             <Image
               src={product?.galleryImages.img1 ?? ""}
-              className=" rounded-xl"
+              className=" rounded-xl md:w-full"
               alt="productImg"
               width={500}
               height={500}
             />
             <Image
               src={product?.galleryImages.img2 ?? ""}
-              className="rounded-xl"
+              className="rounded-xl md:w-full"
               alt="productImg"
               width={500}
               height={500}

@@ -40,6 +40,14 @@ model Product {
   createdAt     DateTime    @updatedAt
 }
 
+model Order {
+  id      String   @id @map("_id")
+  amount  Float
+  email   String
+  created DateTime
+  name    String
+}
+
 type GalleryImgs {
   img1 String
   img2 String
