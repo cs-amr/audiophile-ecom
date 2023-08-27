@@ -5,7 +5,7 @@ export function RecentSales({ orders }: { orders: any }) {
     <div className=" space-y-8 ">
       {orders.slice(0, 5)?.map((order: any, index: number) => {
         return (
-          <div className="flex items-center">
+          <div className="flex items-center" key={order.id}>
             <Avatar className="h-9 w-9">
               <AvatarImage
                 src={`https://ui.shadcn.com/avatars/0${index + 1}.png`}

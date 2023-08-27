@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Stripe from "stripe";
-export default function page() {
+export default function Page() {
   const searchParams = useSearchParams();
 
   const id = searchParams.get("session_id");
