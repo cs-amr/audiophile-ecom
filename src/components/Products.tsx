@@ -46,7 +46,7 @@ export default function Products() {
           <Image
             src="https://utfs.io/f/b97cc233-da5f-430d-8c7d-1d0266158bab_image-earphones-yx1.jpg"
             alt=""
-            className="rounded-xl"
+            className="rounded-xl w-[100%]"
             width={500}
             height={500}
           />
